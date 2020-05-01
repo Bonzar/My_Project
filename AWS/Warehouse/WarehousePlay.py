@@ -101,5 +101,5 @@ while True:
     elif command == 'Exit':
         raise SystemExit
     elif command == 'List':
-        with open('Warehouse/WarehouseList.json', 'r', encoding='utf-8') as List:
+        with open('WarehouseList.json', 'r', encoding='utf-8') as List:
             print(List.read())

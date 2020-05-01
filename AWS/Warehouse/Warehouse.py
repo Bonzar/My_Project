@@ -8,12 +8,12 @@ class TypeOrgEquipmentError(Exception):
 
 
 class Warehouse:
-    with open("Warehouse/WarehouseList.json", 'r', encoding='utf-8') as WL1:
+    with open("WarehouseList.json", 'r', encoding='utf-8') as WL1:
         list_equipment = json.load(WL1)
 
     @staticmethod
     def default():
-        with open("Warehouse/WarehouseList.json", 'w', encoding='utf-8') as WLw:
+        with open("WarehouseList.json", 'w', encoding='utf-8') as WLw:
             list_equipment_default = {'Printer': [], 'Scanner': [], 'PrinterScanner': [], 'Xerox': []}
             json.dump(list_equipment_default, WLw, indent=4)
 
@@ -46,7 +46,7 @@ class OrgEquipment:
         except ValueError as VE:
             print('Not a number was entered')
             return
-        with open("Warehouse/WarehouseList.json", 'w', encoding='utf-8') as WLw:
+        with open("WarehouseList.json", 'w', encoding='utf-8') as WLw:
             if Warehouse.list_equipment[cls.__name__]:
                 for i in range(len(Warehouse.list_equipment[cls.__name__])):
                     if Warehouse.list_equipment[cls.__name__][i]["model"].upper() == args[0]["model"].upper():
