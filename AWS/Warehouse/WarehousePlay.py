@@ -89,7 +89,7 @@ while True:
             print('Models on warehouse:')
             if len(Warehouse.list_equipment['Xerox']):
                 for i in range(len(Warehouse.list_equipment['Xerox'])):
-                    print(Warehouse.list_equipment["Xerox"][i]["model"])
+                    print(1,'', Warehouse.list_equipment["Xerox"][i]["model"])
             else:
                 print('Nothing to delete!')
                 continue

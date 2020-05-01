@@ -66,7 +66,7 @@ class OrgEquipment:
         except ValueError as VE:
             print('Not a number was entered')
             return
-        with open('WarehouseList.json', 'w', encoding='utf-8') as WLw:
+        with open('Warehouse/WarehouseList.json', 'w', encoding='utf-8') as WLw:
             if Warehouse.list_equipment[cls.__name__]:
                 for i in range(len(Warehouse.list_equipment[cls.__name__])):
                     if Warehouse.list_equipment[cls.__name__][i]["model"].upper() == args[0]["model"].upper():
