@@ -23,6 +23,8 @@ def dell(equipment):
         else:
             raise EmptyModel
         new_model = input('Enter a model(or a number of model) to delete: ')
+        while not new_model.isdigit() or int(new_model) > len(Warehouse.list_equipment[equipment]):
+            new_model = input(': ')
         return dict_of_models_to_delete[int(new_model)] if new_model.isdigit() else new_model
     except EmptyModel:
         return
@@ -39,18 +41,19 @@ class TypeOrgEquipmentError(Exception):
 
 
 def default():
-    with open("WarehouseList.json", 'w', encoding='utf-8') as WLw:
+    with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'w', encoding='utf-8') as WLj:
         list_equipment_default = {'Printer': [], 'Scanner': [], 'PrinterScanner': [], 'Xerox': []}
-        json.dump(list_equipment_default, WLw, indent=4)
+        json.dump(list_equipment_default, WLj, indent=4)
 
 
 class Warehouse:
-    with open("WarehouseList.json", 'r', encoding='utf-8') as WL1:
-        try:
-            list_equipment = json.load(WL1)
-        except json.decoder.JSONDecodeError:
-            default()
-            list_equipment = json.load(WL1)
+    try:
+        with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'r', encoding='utf-8') as WLj:
+            list_equipment = json.load(WLj)
+    except json.decoder.JSONDecodeError and FileNotFoundError:
+        default()
+        with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'r', encoding='utf-8') as WLj:
+            list_equipment = json.load(WLj)
 
 
 def add_to_warehouse(equipment, *args):
@@ -59,7 +62,7 @@ def add_to_warehouse(equipment, *args):
     except ValueError:
         print('Not a number was entered')
         return
-    with open("WarehouseList.json", 'w', encoding='utf-8') as WLw:
+    with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'w', encoding='utf-8') as WLw:
         if Warehouse.list_equipment[equipment]:
             for i in range(len(Warehouse.list_equipment[equipment])):
                 if Warehouse.list_equipment[equipment][i]["model"].upper() == args[0]["model"].upper():
@@ -87,7 +90,7 @@ class OrgEquipment:
         except ValueError as VE:
             print('Not a number was entered')
             return
-        with open('WarehouseList.json', 'w', encoding='utf-8') as WLw:
+        with open('/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json', 'w', encoding='utf-8') as WLw:
             if Warehouse.list_equipment[cls.__name__]:
                 for i in range(len(Warehouse.list_equipment[cls.__name__])):
                     if Warehouse.list_equipment[cls.__name__][i]["model"].upper() == args[0]["model"].upper():
@@ -130,13 +133,15 @@ class Scanner(OrgEquipment):
         Scanner._version_scanner1(self)
         self._list_of_params = {'firm': firm, 'cost': cost, 'model': model, 'version_scanner': self.version_scanner}
 
-    def _version_scanner1(self):
+    def _version_scanner1(self, number_of_version=None):
         if self.version_scanner is not None:
             pass
-        elif 'S' in self.model:
+        elif 'PS' in self.model.split('_')[0]:
+            number_of_version = self.model[2]
+        else:
             number_of_version = self.model[1]
-            if number_of_version.isdigit() and 1 <= int(number_of_version) <= 3:
-                self.version_scanner = int(number_of_version)
+        if number_of_version.isdigit() and (1 <= int(number_of_version) <= 3):
+            self.version_scanner = int(number_of_version)
 
     def add_scanner(self, equipment):
         add_to_warehouse(equipment, self._list_of_params)

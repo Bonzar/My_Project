@@ -70,14 +70,14 @@ while True:
             x = Xerox(model)
             Xerox.del_xerox(x)
     elif command == 'List' or command == '3':
-        with open('WarehouseList.json', 'r', encoding='utf-8') as List:
+        with open('/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json', 'r', encoding='utf-8') as List:
             print(List.read())
     elif command == 'Default' or command == '4':
         default()
     elif command == 'Exit' or command == '5':
         raise SystemExit
 
-    elif command == 'Help'  or command == '6':
+    elif command == 'Help' or command == '6':
         print('Available command:\n'
               '1) Add (add equipment to warehouse)\n'
               '2) Del (del equipment from warehouse)\n'
