@@ -6,6 +6,13 @@
             "model": "P_1000B",
             "type_paint": "Black & White",
             "count": 12
+        },
+        {
+            "firm": "asus",
+            "cost": "1000",
+            "model": "P_10000C",
+            "type_paint": "Colorful",
+            "count": 1
         }
     ],
     "Scanner": [

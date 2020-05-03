@@ -5,6 +5,27 @@ import re
 path = "WarehouseList.json"
 
 
+def info():
+    print('List of models in Warehouse:')
+    number_in_list = 1
+    dict_of_models = {}
+    for eqp_kind in Warehouse.list_equipment:
+        for eks in Warehouse.list_equipment[eqp_kind]:
+            print(f'{number_in_list}) {eks["model"]}')
+            dict_of_models[number_in_list] = eks
+            number_in_list += 1
+    model = input('\nChoice number of model to take full info or return /back/: ')
+    while (model.lower() != 'back') and (not model.isdigit() or int(model) > len(dict_of_models)):
+        model = input(': ')
+    if model.lower() == 'back':
+        return
+    else:
+        f = dict_of_models[int(model)]
+        for el, var in f.items():
+            print(f'"{el}": {var}')
+        return
+
+
 def short_name(letter):
     try:
         dict_of_equipment = {'Printer': 'P', 'Scanner': 'S', 'PrinterScanner': 'PS', 'Xerox': 'X', 'P': 'Printer',
@@ -19,16 +40,16 @@ def dell(equipment):
     try:
         if len(Warehouse.list_equipment[equipment]):
             print('Models on warehouse:')
-            dict_of_models_to_delete = {}
+            dict_of_models = {}
             for i in range(len(Warehouse.list_equipment[equipment])):
                 print(f'{i + 1}) {Warehouse.list_equipment[equipment][i]["model"]}')
-                dict_of_models_to_delete[i + 1] = Warehouse.list_equipment[equipment][i]["model"]
+                dict_of_models[i + 1] = Warehouse.list_equipment[equipment][i]["model"]
         else:
             raise EmptyModel
         new_model = input('Enter a model(or a number of model): ')
         while not new_model.isdigit() or int(new_model) > len(Warehouse.list_equipment[equipment]):
             new_model = input(': ')
-        return dict_of_models_to_delete[int(new_model)] if new_model.isdigit() else new_model
+        return dict_of_models[int(new_model)] if new_model.isdigit() else new_model
     except EmptyModel:
         return
 

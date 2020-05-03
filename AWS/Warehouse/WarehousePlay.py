@@ -83,11 +83,14 @@ while True:
         default()
     elif command == 'Exit' or command == '5':
         raise SystemExit
-    elif command == 'Help' or command == '6':
+    elif command == 'Info' or command == '6':
+        info()
+    elif command == 'Help' or command == '7':
         print('Available command:\n'
               '1) Add (add equipment to warehouse)\n'
               '2) Del (del equipment from warehouse)\n'
               '3) List (display the contents of the warehouse)\n'
               '4) Default (reset the contents of the warehouse)\n'
               '5) Exit (out of program)\n'
-              '6) Help (list of available commands)')
+              "6) Info (available model's)\n"
+              '7) Help (list of available commands)')
