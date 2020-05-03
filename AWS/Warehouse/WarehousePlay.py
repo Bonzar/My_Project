@@ -1,7 +1,5 @@
 from json import load
-
 from Warehouse import *
-
 """   Welcome to the office equipment accounting program.
     ------------------------------------------------------
     We have 4 type's of equipment:
@@ -29,11 +27,20 @@ while True:
             equipment = short_name(short_name(equipment))
         if equipment == 'Back':
             continue
-        firm = input('Firm: ')
-        model = short_name(equipment) + input(f'Model: {short_name(equipment)}')
-        cost = input('Cost: ')
-        while not cost.isdigit():
-            cost = input(': ')
+        adding_mode = input('Add to old model(1) or create a new?(2)\n:').lower()
+        while adding_mode != 'new' and adding_mode != 'old' and adding_mode != '1' and adding_mode != '2':
+            print(adding_mode)
+            adding_mode = input(': ')
+        if adding_mode == '1' or adding_mode == 'old':
+            model = dell(equipment)
+            if model is None:
+                continue
+        elif adding_mode == '2' or adding_mode == 'new':
+            model = short_name(equipment) + input(f'Model: {short_name(equipment)}')
+            firm = input('Firm: ')
+            cost = input('Cost: ')
+            while not cost.isdigit():
+                cost = input(': ')
         if equipment == 'Printer':
             p = Printer(model, firm, cost)
             Printer.add_printer(p, equipment=equipment)
@@ -70,13 +77,12 @@ while True:
             x = Xerox(model)
             Xerox.del_xerox(x)
     elif command == 'List' or command == '3':
-        with open('/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json', 'r', encoding='utf-8') as List:
+        with open(path, 'r', encoding='utf-8') as List:
             print(List.read())
     elif command == 'Default' or command == '4':
         default()
     elif command == 'Exit' or command == '5':
         raise SystemExit
-
     elif command == 'Help' or command == '6':
         print('Available command:\n'
               '1) Add (add equipment to warehouse)\n'

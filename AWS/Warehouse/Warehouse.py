@@ -1,6 +1,9 @@
 import json
 import re
 
+# path = "/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json"
+path = "WarehouseList.json"
+
 
 def short_name(letter):
     try:
@@ -22,7 +25,7 @@ def dell(equipment):
                 dict_of_models_to_delete[i + 1] = Warehouse.list_equipment[equipment][i]["model"]
         else:
             raise EmptyModel
-        new_model = input('Enter a model(or a number of model) to delete: ')
+        new_model = input('Enter a model(or a number of model): ')
         while not new_model.isdigit() or int(new_model) > len(Warehouse.list_equipment[equipment]):
             new_model = input(': ')
         return dict_of_models_to_delete[int(new_model)] if new_model.isdigit() else new_model
@@ -32,7 +35,7 @@ def dell(equipment):
 
 class EmptyModel(Exception):
     def __init__(self):
-        print('Nothing to delete!')
+        print('Nothing in list!')
 
 
 class TypeOrgEquipmentError(Exception):
@@ -41,18 +44,18 @@ class TypeOrgEquipmentError(Exception):
 
 
 def default():
-    with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'w', encoding='utf-8') as WLj:
+    with open(path, 'w', encoding='utf-8') as WLj:
         list_equipment_default = {'Printer': [], 'Scanner': [], 'PrinterScanner': [], 'Xerox': []}
         json.dump(list_equipment_default, WLj, indent=4)
 
 
 class Warehouse:
     try:
-        with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'r', encoding='utf-8') as WLj:
+        with open(path, 'r', encoding='utf-8') as WLj:
             list_equipment = json.load(WLj)
     except json.decoder.JSONDecodeError and FileNotFoundError:
         default()
-        with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'r', encoding='utf-8') as WLj:
+        with open(path, 'r', encoding='utf-8') as WLj:
             list_equipment = json.load(WLj)
 
 
@@ -62,7 +65,7 @@ def add_to_warehouse(equipment, *args):
     except ValueError:
         print('Not a number was entered')
         return
-    with open("/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json", 'w', encoding='utf-8') as WLw:
+    with open(path, 'w', encoding='utf-8') as WLw:
         if Warehouse.list_equipment[equipment]:
             for i in range(len(Warehouse.list_equipment[equipment])):
                 if Warehouse.list_equipment[equipment][i]["model"].upper() == args[0]["model"].upper():
@@ -90,7 +93,7 @@ class OrgEquipment:
         except ValueError as VE:
             print('Not a number was entered')
             return
-        with open('/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json', 'w', encoding='utf-8') as WLw:
+        with open(path, 'w', encoding='utf-8') as WLw:
             if Warehouse.list_equipment[cls.__name__]:
                 for i in range(len(Warehouse.list_equipment[cls.__name__])):
                     if Warehouse.list_equipment[cls.__name__][i]["model"].upper() == args[0]["model"].upper():

@@ -1,0 +1,22 @@
+{
+    "Printer": [
+        {
+            "firm": "Asus",
+            "cost": "12000",
+            "model": "P_1000B",
+            "type_paint": "Black & White",
+            "count": 12
+        }
+    ],
+    "Scanner": [
+        {
+            "firm": "asus",
+            "cost": "1200",
+            "model": "S1_1000",
+            "version_scanner": 1,
+            "count": 2
+        }
+    ],
+    "PrinterScanner": [],
+    "Xerox": []
+}
