@@ -1,8 +1,8 @@
 import json
 import re
 
-path = "/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json"
-# path = "WarehouseList.json"
+# path = "/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json"
+path = "WarehouseList.json"
 
 
 def info():
@@ -32,7 +32,6 @@ def short_name(letter):
                              'S': 'Scanner', 'Ps': 'PrinterScanner', 'X': 'Xerox'}
         return dict_of_equipment[letter]
     except KeyError:
-        print('Not equipment!')
         return "Back"
 
 
@@ -74,7 +73,7 @@ class Warehouse:
     try:
         with open(path, 'r', encoding='utf-8') as WLj:
             list_equipment = json.load(WLj)
-    except json.decoder.JSONDecodeError and FileNotFoundError:
+    except json.decoder.JSONDecodeError or FileNotFoundError:
         default()
         with open(path, 'r', encoding='utf-8') as WLj:
             list_equipment = json.load(WLj)
@@ -105,7 +104,7 @@ class OrgEquipment:
         self.firm = firm
         self.cost = cost
         self.model = model
-        self._list_of_params = {'firm': firm, 'cost': cost, 'model': model}
+        self._list_of_params = {'firm': firm, 'model': model, 'cost': cost}
 
     @classmethod
     def del_from_warehouse(cls, *args):
@@ -133,7 +132,7 @@ class Printer(OrgEquipment):
         super().__init__(model)
         self.type_paint = type_paint
         Printer._type_paint1(self)
-        self._list_of_params = {'firm': firm, 'cost': cost, 'model': model, 'type_paint': self.type_paint}
+        self._list_of_params = {'firm': firm, 'model': model, 'type_paint': self.type_paint, 'cost': cost}
 
     def _type_paint1(self):
         if self.type_paint is not None:
@@ -155,7 +154,7 @@ class Scanner(OrgEquipment):
         super().__init__(model)
         self.version_scanner = version_scanner
         Scanner._version_scanner1(self)
-        self._list_of_params = {'firm': firm, 'cost': cost, 'model': model, 'version_scanner': self.version_scanner}
+        self._list_of_params = {'firm': firm, 'model': model, 'version_scanner': self.version_scanner, 'cost': cost}
 
     def _version_scanner1(self, number_of_version=None):
         if self.version_scanner is not None:
@@ -181,8 +180,8 @@ class PrinterScanner(Printer, Scanner):
         Printer._type_paint1(self)
         self.version_scanner = version_scanner
         Scanner._version_scanner1(self)
-        self._list_of_params = {'firm': firm, 'cost': cost, 'model': model, 'type_paint': self.type_paint,
-                                'version_scanner': self.version_scanner}
+        self._list_of_params = {'firm': firm, 'model': model, 'type_paint': self.type_paint,
+                                'version_scanner': self.version_scanner, 'cost': cost}
 
     def add_printer_scanner(self, equipment):
         add_to_warehouse(equipment, self._list_of_params)

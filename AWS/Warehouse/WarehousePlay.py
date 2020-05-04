@@ -1,5 +1,6 @@
 from json import load
 from Warehouse import *
+
 """   Welcome to the office equipment accounting program.
     ------------------------------------------------------
     We have 4 type's of equipment:
@@ -41,6 +42,7 @@ while True:
             cost = input('Cost: ')
             while not cost.isdigit():
                 cost = input(': ')
+            cost = int(cost)
         if equipment == 'Printer':
             p = Printer(model, firm, cost)
             Printer.add_printer(p, equipment=equipment)
@@ -81,16 +83,16 @@ while True:
             print(List.read())
     elif command == 'Default' or command == '4':
         default()
-    elif command == 'Exit' or command == '5':
-        raise SystemExit
-    elif command == 'Info' or command == '6':
+    elif command == 'Info' or command == '5':
         info()
-    elif command == 'Help' or command == '7':
+    elif command == 'Help' or command == '6':
         print('Available command:\n'
               '1) Add (add equipment to warehouse)\n'
               '2) Del (del equipment from warehouse)\n'
               '3) List (display the contents of the warehouse)\n'
               '4) Default (reset the contents of the warehouse)\n'
-              '5) Exit (out of program)\n'
-              "6) Info (available model's)\n"
-              '7) Help (list of available commands)')
+              "5) Info (available model's)\n"
+              '6) Help (list of available commands)\n'
+              '7) Exit (out of program)')
+    elif command == 'Exit' or command == '7':
+        raise SystemExit

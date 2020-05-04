@@ -1,29 +1,23 @@
 {
-    "Printer": [
-        {
-            "firm": "Asus",
-            "cost": "12000",
-            "model": "P_1000B",
-            "type_paint": "Black & White",
-            "count": 12
-        },
-        {
-            "firm": "asus",
-            "cost": "1000",
-            "model": "P_10000C",
-            "type_paint": "Colorful",
-            "count": 1
-        }
-    ],
+    "Printer": [],
     "Scanner": [
         {
             "firm": "asus",
-            "cost": "1200",
-            "model": "S1_1000",
+            "model": "S1_1234",
             "version_scanner": 1,
-            "count": 2
+            "cost": 1,
+            "count": 9
         }
     ],
-    "PrinterScanner": [],
+    "PrinterScanner": [
+        {
+            "firm": "lemovo",
+            "model": "PS1_123B",
+            "type_paint": "Black & White",
+            "version_scanner": 1,
+            "cost": 12,
+            "count": 999
+        }
+    ],
     "Xerox": []
 }
