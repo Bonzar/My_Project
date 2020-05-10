@@ -1,9 +1,7 @@
 import json
-import re
 
 # path = "/home/ubuntu/MyProject/AWS/Warehouse/WarehouseList.json"
 path = "WarehouseList.json"
-
 
 def info():
     print('List of models in Warehouse:')
